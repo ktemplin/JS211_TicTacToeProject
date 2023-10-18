@@ -22,15 +22,16 @@ const handleClick = (element) => {
   if(!document.getElementById(element.id).innerHTML){
     addMarker(element.id)
     updateBoard(element.id)
+    console.log('test')
     checkForWin()
-  }
+    }
 }
 
 const addMarker = (id) => {
   console.log(`We'll place a mark on square: ${id}`)
   // @TODO, Mix & Match. 
   // You will need the following pieces:
-  
+  document.getElementById(id).innerHTML = currentMarker
   // = currentMarker
   // .getElementById(id)
   // document
@@ -45,7 +46,7 @@ const updateBoard = (id) => {
   // parses the id string into a number then captures the first and last part of the newly created number as row & column
   const row = parseInt(id.charAt(0))
   const column = parseInt(id.charAt(2)) 
-
+  board[row][column] = currentMarker
   console.log(`you clicked the sq at ${row} and ${column}`)
   console.log(board)
 
@@ -55,6 +56,7 @@ const updateBoard = (id) => {
 
 const checkForWin = () => {
   // calls each checkForWin possibility and if any are true gives a page alert,
+  console.log(horizontalWin(), verticalWin(), diagonalWin())
   if(horizontalWin() || verticalWin() || diagonalWin()) {
     // **BONUS** you could make the dismissal of this alert window reset the board...
     window.alert(`Player ${currentMarker} won!`)
@@ -66,14 +68,57 @@ const checkForWin = () => {
 
 const horizontalWin = () => {
   // @TODO, Your code here: to check for horizontal wins
+  return(
+    // Row 1 check
+      (board[0][0] === "X" && board[0][1] === "X" && board[0][2] === "X")
+    || 
+      (board[0][0] === "O" && board[0][1] === "O" && board[0][2] === "O")
+    // Row 2 check
+    ||
+      (board[1][0] === "X" && board[1][1] === "X" && board[1][2] === "X")
+    || 
+      (board[1][0] === "O" && board[1][1] === "O" && board[1][2] === "O")
+    ||
+    // Row 3 check
+      (board[2][0] === "X" && board[2][1] === "X" && board[2][2] === "X")
+    || 
+      (board[2][0] === "O" && board[2][1] === "O" && board[2][2] === "O")
+  )
 }
 
 const verticalWin = () => {
   // @TODO, Your code here: to check for vertical wins
+  return(
+    // Column 1 check
+      (board[0][0] === "X" && board[1][0] === "X" && board[2][0] === "X")
+    || 
+      (board[0][0] === "O" && board[1][0] === "O" && board[2][0] === "O")
+    // Column 2 check
+    ||
+      (board[0][1] === "X" && board[1][1] === "X" && board[2][1] === "X")
+    || 
+      (board[0][1] === "O" && board[1][1] === "O" && board[2][1] === "O")
+    ||
+    // Column 3 check
+      (board[0][2] === "X" && board[1][2] === "X" && board[2][2] === "X")
+    || 
+      (board[0][2] === "O" && board[1][2] === "O" && board[2][2] === "O")
+  )
 }
 
 const diagonalWin = () => {
   // @TODO, Your code here: to check for diagonal wins
+  return(
+    // Top right to bottom left
+      (board[0][2] === "X" && board[1][1] === "X" && board[2][0] === "X")
+    ||
+      (board[0][2] === "O" && board[1][1] === "O" && board[2][0] === "O")
+    ||
+    // Top left to bottom right 
+      (board[0][0] === "X" && board[1][1] === "X" && board[2][2] === "X")
+    ||
+      (board[0][0] === "O" && board[1][1] === "O" && board[2][2] === "O")
+  )
 }
 
 const changeMarker = () => {
